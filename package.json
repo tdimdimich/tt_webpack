@@ -1,0 +1,25 @@
+{
+  "name": "tt_webpack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "webpack",
+	"build": "NODE_ENV=production webpack",
+	"start": "static public --spa"
+  },
+  "babel": {
+	"presets": [
+		["env", {"targets": {"node": "current"}}]
+	]
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "webpack": "^2.5.1",
+    "webpack-manifest-plugin": "^1.1.0"
+  }
+}
