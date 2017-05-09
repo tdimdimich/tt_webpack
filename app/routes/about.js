@@ -2,7 +2,10 @@
 
 const AboutPage = {
 	title: 'About',
-	message: 'Our company is very great! We awesome!',
+	render: () => `
+		<p>Our company is very great!</p>
+		<p>We awesome!</p>
+	`,
 }
 
 export default AboutPage

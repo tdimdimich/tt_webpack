@@ -2,7 +2,7 @@
 
 const HomePage = {
 	title: 'Home',
-	message: 'This is home page',
+	render: () => '<p>This is home page</p>',
 }
 
 export default HomePage

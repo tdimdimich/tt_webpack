@@ -4,21 +4,24 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 
 const NODE_ENV = process.env.NODE_ENV || 'development' 
+const isdev = NODE_ENV === 'development'
+
+const chunkname = (chunk, type) => isdev && `${chunk}.${type}` || `${chunk}_[chunkhash].${type}`
 
 const config = {
 	context: __dirname + '/app',
 	entry: {
-	  index:  "./index",
+		index:  "./index",
 	},
 	
 	output: {
-		path:     __dirname + '/public/',
-		// publicPath: '/js/',
-		filename: "js/[name].js",
-		chunkFilename: "js/ch[id].js",
+		path:     __dirname + '/public/assets/',
+		publicPath: '/assets/',
+		filename: chunkname('index', 'js'),
+		chunkFilename: chunkname('dch[id]', 'js'),
     },
 
-    watch: NODE_ENV == 'development',
+    watch: isdev,
 
     module: {
 		rules: [{
@@ -44,17 +47,18 @@ const config = {
 			NODE_ENV: JSON.stringify(NODE_ENV)
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: "common"
+			name: "common", filename: chunkname('common', 'js')
 		}),
 		new ExtractTextPlugin({
-			filename: 'css/style.css',
+			filename: chunkname('style', 'css'),
 			allChunks: true,
 		}),
+		
 	],
 
 };
 
-if (NODE_ENV == 'production') {
+if (isdev) {
     config.plugins.push(
 		new webpack.optimize.UglifyJsPlugin({
 		    compress: {

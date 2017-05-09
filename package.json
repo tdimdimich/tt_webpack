@@ -4,11 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-	"prepare": "npm run clean && mkdir -p public && cp index.html public/",
-    "watch": "npm run prepare && NODE_ENV=development webpack",
-    "build": "npm run prepare && NODE_ENV=production webpack",
+    "watch": "NODE_ENV=development webpack",
+    "build": "NODE_ENV=production webpack",
     "start": "static public --spa",
-	"clean": "rm -rf public"
+    "clean": "rm -rf public/assets/"
   },
   "babel": {
     "presets": [
@@ -31,6 +30,7 @@
     "css-loader": "^0.28.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "node-sass": "^4.5.2",
+    "node-static": "^0.7.9",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
