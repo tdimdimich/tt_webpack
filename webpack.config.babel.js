@@ -31,7 +31,7 @@ const config = {
 			use: {
 				loader: 'babel-loader',
 				options: {
-				presets: ['env']
+					presets: ['env'],
 				}
 			},
 		}, {
@@ -48,7 +48,15 @@ const config = {
 			NODE_ENV: JSON.stringify(NODE_ENV)
 		}),
 		new webpack.optimize.CommonsChunkPlugin({
-			name: "common", filename: chunkname('common', 'js')
+			name: "index",
+			filename: chunkname('common', 'js'),
+			children: true,
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "index",
+			async: true,
+			children: true,
+			minChunks: 2,
 		}),
 		new ExtractTextPlugin({
 			filename: chunkname('style', 'css'),
@@ -62,7 +70,7 @@ const config = {
 
 };
 
-if (isdev) {
+if (!isdev) {
     config.plugins.push(
 		new webpack.optimize.UglifyJsPlugin({
 		    compress: {
