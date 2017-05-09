@@ -7,10 +7,10 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const isdev = NODE_ENV === 'development'
 
-const chunkname = (chunk, type) => 
-	isdev && `${chunk}.${type}` || 
-	type == 'js' && `[chunkhash].${type}` || 
-	type === 'css' && `[hash].${type}`
+const chunkname = (chunk, type) => `${chunk}.${type}`
+	// isdev && `${chunk}.${type}` || 
+	// type == 'js' && `[chunkhash].${type}` || 
+	// type === 'css' && `[hash].${type}`
 
 const config = {
 	context: __dirname + '/app',

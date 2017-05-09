@@ -1,5 +1,5 @@
 import moment from 'moment'
-import lodash from 'lodash'
+// import lodash from 'lodash'
 
 const build_time = moment().format() //'DD MM YYYY'// moment.format()
 const calctime = () => moment(build_time).fromNow()

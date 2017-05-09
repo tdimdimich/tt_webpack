@@ -1,5 +1,5 @@
 // import moment from 'moment'
-import lodash from 'lodash'
+// import lodash from 'lodash'
 
 const NewPage = {
 	title: 'New',

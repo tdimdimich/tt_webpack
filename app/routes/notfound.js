@@ -1,6 +1,6 @@
 import Header from 'layout/header'
 import moment from 'moment'
-import lodash from 'lodash'
+// import lodash from 'lodash'
 
 const NotFoundPage = {
 	title: '404: NotFound',
