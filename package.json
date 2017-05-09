@@ -4,14 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "webpack",
-	"build": "NODE_ENV=production webpack",
-	"start": "static public --spa"
+	"prepare": "npm run clean && mkdir -p public && cp index.html public/",
+    "watch": "npm run prepare && NODE_ENV=development webpack",
+    "build": "npm run prepare && NODE_ENV=production webpack",
+    "start": "static public --spa",
+	"clean": "rm -rf public"
   },
   "babel": {
-	"presets": [
-		["env", {"targets": {"node": "current"}}]
-	]
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +28,11 @@
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",
     "babel-preset-env": "^1.4.0",
+    "css-loader": "^0.28.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.17.0",
     "webpack": "^2.5.1",
     "webpack-manifest-plugin": "^1.1.0"
   }

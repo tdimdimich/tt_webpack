@@ -1,5 +1,7 @@
-import ManifestPlugin from 'webpack-manifest-plugin'
 import webpack from 'webpack'
+import ManifestPlugin from 'webpack-manifest-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+
 
 const NODE_ENV = process.env.NODE_ENV || 'development' 
 
@@ -10,29 +12,13 @@ const config = {
 	},
 	
 	output: {
-		path:     __dirname + '/public/js',
-		publicPath: '/js/',
-		filename: "[name].js",
+		path:     __dirname + '/public/',
+		// publicPath: '/js/',
+		filename: "js/[name].js",
+		chunkFilename: "js/ch[id].js",
     },
 
     watch: NODE_ENV == 'development',
-
-    watchOptions: {
-        aggregateTimeout: 100
-    },
-
-    devtool: NODE_ENV == 'development'
-        ? "cheap-inline-module-source-map"
-        : false,
-
-    plugins: [
-		new webpack.DefinePlugin({
-			NODE_ENV: JSON.stringify(NODE_ENV)
-		}),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: "common"
-		}),
-	],
 
     module: {
 		rules: [{
@@ -43,9 +29,28 @@ const config = {
 				options: {
 				presets: ['env']
 				}
-			}
-		}]
-    }
+			},
+		}, {
+			test: /\.scss$/,
+			use: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: ['css-loader', 'sass-loader']
+			})
+		}],
+    },
+	
+	plugins: [
+		new webpack.DefinePlugin({
+			NODE_ENV: JSON.stringify(NODE_ENV)
+		}),
+		new webpack.optimize.CommonsChunkPlugin({
+			name: "common"
+		}),
+		new ExtractTextPlugin({
+			filename: 'css/style.css',
+			allChunks: true,
+		}),
+	],
 
 };
 
@@ -53,13 +58,12 @@ if (NODE_ENV == 'production') {
     config.plugins.push(
 		new webpack.optimize.UglifyJsPlugin({
 		    compress: {
-		        // don't show unreachable variables etc
 		        warnings: false,
 		        drop_console: true,
 		        unsafe: true
 		    }
     	}), 
-		new ManifestPlugin()
+		// new ManifestPlugin()
 	)
 }
 
