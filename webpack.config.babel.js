@@ -1,12 +1,13 @@
 import webpack from 'webpack'
 import ManifestPlugin from 'webpack-manifest-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 
 const NODE_ENV = process.env.NODE_ENV || 'development' 
 const isdev = NODE_ENV === 'development'
 
-const chunkname = (chunk, type) => isdev && `${chunk}.${type}` || `${chunk}_[chunkhash].${type}`
+const chunkname = (chunk, type) => isdev && `${chunk}.${type}` || `[chunkhash].${type}`
 
 const config = {
 	context: __dirname + '/app',
@@ -53,7 +54,10 @@ const config = {
 			filename: chunkname('style', 'css'),
 			allChunks: true,
 		}),
-		
+		new HtmlWebpackPlugin({
+			filename: '../index.html',
+			template: 'index.html',
+		}),
 	],
 
 };
