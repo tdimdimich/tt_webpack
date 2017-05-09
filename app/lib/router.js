@@ -1,4 +1,4 @@
-import render from './render'
+import render from 'lib/render'
 
 
 const pages = {}

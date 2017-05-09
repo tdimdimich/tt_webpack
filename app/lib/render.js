@@ -1,4 +1,4 @@
-import Header from '../layout/header'
+import Header from 'layout/header'
 
 const render = (Page) => {
 	document.title = Page.title

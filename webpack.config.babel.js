@@ -24,6 +24,14 @@ const config = {
 		filename: chunkname('index', 'js'),
 		chunkFilename: chunkname('dch[id]', 'js'),
     },
+	
+	resolve: {
+		alias: {
+			layout: 	__dirname + '/app/layout',
+			lib: 		__dirname + '/app/lib',
+			routes: 	__dirname + '/app/routes',
+		}
+	},
 
     watch: isdev,
 
@@ -50,6 +58,10 @@ const config = {
 		new webpack.DefinePlugin({
 			NODE_ENV: JSON.stringify(NODE_ENV)
 		}),
+		new ExtractTextPlugin({
+			filename: chunkname('style', 'css'),
+			allChunks: true,
+		}),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: "index",
 			filename: chunkname('common', 'js'),
@@ -60,10 +72,6 @@ const config = {
 			async: true,
 			children: true,
 			minChunks: 2,
-		}),
-		new ExtractTextPlugin({
-			filename: chunkname('style', 'css'),
-			allChunks: true,
 		}),
 		new HtmlWebpackPlugin({
 			filename: '../index.html',

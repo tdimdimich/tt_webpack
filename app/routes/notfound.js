@@ -1,4 +1,4 @@
-import Header from '../layout/header'
+import Header from 'layout/header'
 import moment from 'moment'
 import lodash from 'lodash'
 

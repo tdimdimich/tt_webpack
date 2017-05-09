@@ -1,4 +1,4 @@
-import router from './lib/router'
+import router from 'lib/router'
 
 
 router.rule(['', 'index'] , 'home')
