@@ -4,7 +4,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 
-const NODE_ENV = process.env.NODE_ENV || 'development' 
+const NODE_ENV = process.env.NODE_ENV || 'development'
 const isdev = NODE_ENV === 'development'
 
 const chunkname = (chunk, type) => 
@@ -56,7 +56,10 @@ const config = {
 	
 	plugins: [
 		new webpack.DefinePlugin({
-			NODE_ENV: JSON.stringify(NODE_ENV)
+			// 'process.env': {
+		    // 	NODE_ENV: JSON.stringify('production'),
+		    // },
+			// NODE_ENV: JSON.stringify(NODE_ENV)
 		}),
 		new ExtractTextPlugin({
 			filename: chunkname('style', 'css'),
@@ -73,6 +76,7 @@ const config = {
 			children: true,
 			minChunks: 2,
 		}),
+		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /\!/),
 		new HtmlWebpackPlugin({
 			filename: '../index.html',
 			template: 'index.html',
