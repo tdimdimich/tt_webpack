@@ -1,8 +1,15 @@
-import router from 'lib/router'
+// import router from 'lib/router'
+// router.rule(['', 'index'] , 'home')
+// router.push(window.location.pathname)
 
-router.rule(['', 'index'] , 'home')
+import React from 'react'
+import { render } from 'react-dom'
 
-router.push(window.location.pathname)
+import App from './App'
+
+console.log(App)
+
+render(React.createElement(App), document.getElementById('app'));
 
 
 

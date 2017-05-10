@@ -7,10 +7,10 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 const NODE_ENV = process.env.NODE_ENV || 'development'
 const isdev = NODE_ENV === 'development'
 
-const chunkname = (chunk, type) => `${chunk}.${type}`
-	// isdev && `${chunk}.${type}` || 
-	// type == 'js' && `[chunkhash].${type}` || 
-	// type === 'css' && `[hash].${type}`
+const chunkname = (chunk, type) => 
+	isdev && `${chunk}.${type}` || 
+	type == 'js' && `[name]_[chunkhash].${type}` || 
+	type === 'css' && `[hash].${type}`
 
 const config = {
 	context: __dirname + '/app',
@@ -21,15 +21,16 @@ const config = {
 	output: {
 		path:     __dirname + '/public/assets/',
 		publicPath: '/assets/',
-		filename: chunkname('index', 'js'),
+		filename: chunkname('[name]', 'js'),
 		chunkFilename: chunkname('dch[id]', 'js'),
     },
 	
 	resolve: {
+		extensions: [".js", ".jsx", ".json"],
 		alias: {
-			layout: 	__dirname + '/app/layout',
-			lib: 		__dirname + '/app/lib',
-			routes: 	__dirname + '/app/routes',
+			actions: 		__dirname + '/app/actions',
+			components: 	__dirname + '/app/components',
+			containers: 	__dirname + '/app/containers',
 		}
 	},
 
@@ -37,11 +38,12 @@ const config = {
 
     module: {
 		rules: [{
-			test: /\.js$/,
-			exclude: /(node_modules)/,
+			test: /\.(js|jsx)$/,
+			include: /app/,
 			use: {
 				loader: 'babel-loader',
 				options: {
+					plugins: ['transform-react-jsx'],
 					presets: ['env'],
 				}
 			},
@@ -61,22 +63,22 @@ const config = {
 		    // },
 			// NODE_ENV: JSON.stringify(NODE_ENV)
 		}),
+		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /\!/),
 		new ExtractTextPlugin({
 			filename: chunkname('style', 'css'),
 			allChunks: true,
 		}),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: "index",
-			filename: chunkname('common', 'js'),
-			children: true,
-		}),
-		new webpack.optimize.CommonsChunkPlugin({
-			name: "index",
-			async: true,
-			children: true,
-			minChunks: 2,
-		}),
-		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /\!/),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: "index",
+		// 	filename: chunkname('common', 'js'),
+		// 	children: true,
+		// }),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: "index",
+		// 	async: true,
+		// 	children: true,
+		// 	minChunks: 2,
+		// }),
 		new HtmlWebpackPlugin({
 			filename: '../index.html',
 			template: 'index.html',
